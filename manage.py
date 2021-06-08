@@ -1,4 +1,5 @@
-from flask import Flask,session
+from flask import Flask, session
+from flask.ext.script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from redis import StrictRedis
@@ -25,7 +26,7 @@ class Config(object):
     # 开启过期
     SESSION_PERMANENT = False
     # 设置过期时间　单位：秒
-    PERMANENT_SESSION_LIFETIME = 86480*2
+    PERMANENT_SESSION_LIFETIME = 86480 * 2
 
 
 app = Flask(__name__)
@@ -40,6 +41,8 @@ CSRFProtect(app)
 # 设置session保存指定位置
 Session(app)
 
+manager = Manager(app)
+
 
 @app.route('/')
 def index():
@@ -48,4 +51,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
